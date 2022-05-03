@@ -76,10 +76,10 @@ public class orderStock extends JFrame {
 
     private JScrollPane scrollPane1;
     private JTable table1;
-    JTextField textField1;
+    private JTextField textField1;
     private String head[] = {"id", "商品名称", "单价", "库存"};
     private Object[][] data = null;
-
+    private JLabel label1;
     private JButton button1;
     private JButton button2;
     private JButton button3;
@@ -128,9 +128,10 @@ public class orderStock extends JFrame {
         button4 = new JButton();
         button5 = new JButton();
         button6 = new JButton();
+        label1 = new JLabel();
 
-        String sql1=sql111;
 
+        String sql1=sql111;//获取查询所生成的表的sql，如果没进行查询部分，则默认为空
         DefaultTableModel tableModel = new DefaultTableModel(queryData(sql1), head) {
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -147,6 +148,10 @@ public class orderStock extends JFrame {
 
         contentPane.add(textField1);
         textField1.setBounds(390, 345, 70, textField1.getPreferredSize().height);
+
+        label1.setText("仓库菜单");
+        contentPane.add(label1);
+        label1.setBounds(new Rectangle(new Point(225, 5), label1.getPreferredSize()));
 
         button1.setText("刷新");
         contentPane.add(button1);
