@@ -24,7 +24,7 @@ public class updateStock extends JFrame {
         String user = "zsx";
         String dbPassword = "zsx1234GuEt";
         String url = "jdbc:oracle:thin:@139.9.192.221:1521:orcl";
-        orderStock orst1 = new orderStock();
+        orderStock orst1 = new orderStock("");
 
 
         label1 = new JLabel();
@@ -75,6 +75,7 @@ public class updateStock extends JFrame {
         button1.setBounds(100, 260, 105, button1.getPreferredSize().height);
         button1.addActionListener(
                 e -> {
+                    this.setVisible(false);
                     /*int index1 = table1.getSelectedRow();//获取选中行
                     int column1 = table1.getSelectedColumnCount();//获取选中列
                     System.out.println(table1.getValueAt(index1,column1));*/
@@ -87,14 +88,12 @@ public class updateStock extends JFrame {
 
 
                     // 拼sql，容易有注入攻击
-                    orderStock orst2 = new orderStock();
-                    int a1= orst2.hang1;
-                    String sql="delete from StoreHouse where Goods_id = " + a1;
+                    orderStock orderstock = new orderStock("");
+                    String name = orderstock.name1;
+                    String sql="delete from StoreHouse where Goods_name = " + "'"+name+"'";
                     String sql2 = "Insert Into StoreHouse Values("+xiugai01+","+"'"+xiugai02+"'"+","+xiugai03+","+xiugai04+")";
                     String sql3 = "select * from StoreHouse order by Goods_id";
                     System.out.println(sql);
-                    ResultSet rs = null;//结果集：内存，存储了查询到的数据；内存区有一个游标，执行完查询的时候，不指向任何记录
-                    ResultSet rs2 = null;//结果集：内存，存储了查询到的数据；内存区有一个游标，执行完查询的时候，不指向任何记录
                     Statement stmt = null;//语句对象，容易产生注入攻击
                     Connection conn = null;
                     try {
@@ -103,10 +102,13 @@ public class updateStock extends JFrame {
                         stmt.executeQuery(sql);
                         stmt.executeQuery(sql2);
                         stmt.executeQuery(sql3);
-                        orderStock orst3 = new orderStock();
+                        orderStock orderstock1=new orderStock("");
+
+                        String sql1=orderstock1.sql1;
+                        orderStock orst3 = new orderStock(sql1);
                         orst3.setVisible(true);//显示另一个界面
                         //同时隐藏登录界面
-                        this.setVisible(false);
+
                     } catch (SQLException ex) {
                         ex.printStackTrace();
                     }

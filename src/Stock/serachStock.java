@@ -70,7 +70,7 @@ public class  serachStock extends JFrame {
         JButton button2 = new JButton();
         JButton button3 = new JButton();
         JButton button4 = new JButton();
-        orderStock orst = new orderStock();
+        orderStock orst = new orderStock("");
         String d = orst.a;
         DefaultTableModel tableModel = new DefaultTableModel(queryData(d), head) {
             public boolean isCellEditable(int row, int column) {
@@ -136,7 +136,7 @@ public class  serachStock extends JFrame {
         button3.setBounds(new Rectangle(new Point(220, 340), button3.getPreferredSize()));
         button3.addActionListener(
                 e -> {
-                    orderStock a= new orderStock();
+                    orderStock a= new orderStock("");
                     a.setVisible(true);
                     this.setVisible(false);
                 }

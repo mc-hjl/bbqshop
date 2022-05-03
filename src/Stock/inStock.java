@@ -1,5 +1,7 @@
 package Stock;
 
+import com.sun.tools.javac.Main;
+
 import java.awt.*;
 import java.sql.*;
 import javax.swing.*;
@@ -28,6 +30,7 @@ public class inStock extends JFrame {
         label4 = new JLabel();
         textField4 = new JTextField();
         button1 = new JButton();
+        button2 = new JButton();
 
         //======== this ========
         var contentPane = getContentPane();
@@ -67,6 +70,7 @@ public class inStock extends JFrame {
         button1.setBounds(100, 260, 105, button1.getPreferredSize().height);
         button1.addActionListener(
                 e -> {
+                    this.setVisible(false);
                     /*int index1 = table1.getSelectedRow();//获取选中行
                     int column1 = table1.getSelectedColumnCount();//获取选中列
                     System.out.println(table1.getValueAt(index1,column1));*/
@@ -94,10 +98,10 @@ public class inStock extends JFrame {
                         } catch (SQLException throwables) {
                             throwables.printStackTrace();
                         }
-                        orderStock orst = new orderStock();
+                        orderStock orst = new orderStock("");
                         orst.setVisible(true);//显示另一个界面
                         //同时隐藏登录界面
-                        this.setVisible(false);
+
                     } catch (SQLException ex) {
                         ex.printStackTrace();
                     }
@@ -106,6 +110,26 @@ public class inStock extends JFrame {
                 }
 
         );
+
+        //返回键
+        button2.setText("返回");
+        contentPane.add(button2);
+        button2.setBounds(10, 5, button2.getPreferredSize().width, 25);
+        button2.addActionListener(
+                e -> {
+                    try{
+                        this.setVisible(false);
+                        orderStock orderstock =new orderStock("");
+                        orderstock.setVisible(true);
+
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+
+                }
+        );
+
+
 
         contentPane.setPreferredSize(new Dimension(280, 300));
 
@@ -127,6 +151,7 @@ public class inStock extends JFrame {
     private JLabel label4;
     private JTextField textField4;
     private JButton button1;
+    private JButton button2;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
 }

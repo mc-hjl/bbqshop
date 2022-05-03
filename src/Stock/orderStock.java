@@ -1,11 +1,15 @@
 package Stock;
 
+import Login.balogin;
+import com.sun.jdi.ObjectReference;
+import com.sun.tools.javac.Main;
+
 import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-
+import mainlogin.*;
 /*
  * Created by JFormDesigner on Tue Apr 26 21:21:30 CST 2022
  */
@@ -23,9 +27,11 @@ public class orderStock extends JFrame {
     private static String xiugai3;
     private static String xiugai4;
 
+    //获取的goods_name
+    private static String name;
 
-    //获取的goods_id
-    private static int hang;
+    //用于修改查询后的表的参数后返回的表所用的参数~
+    private static String sql="";
 
     //传参的参数生成
     String a=d;
@@ -33,8 +39,8 @@ public class orderStock extends JFrame {
     String xiugai22=xiugai2;
     String xiugai33 = xiugai3;
     String xiugai44=xiugai4;
-    int hang1=hang;
-
+    String name1=name;
+    String sql1=sql;
 
     public void setA(String d){
         orderStock.d = d;
@@ -53,13 +59,18 @@ public class orderStock extends JFrame {
     public void setxiugai4(String xiugai4){
         orderStock.xiugai4 = xiugai4;
     }
-
-    public void sethang(int hang){
-        orderStock.hang = hang;
+    public void setname(String name){
+        orderStock.name = name;
+    }
+    public void setsql(String sql){
+        orderStock.sql = sql;
     }
 
-    public orderStock() {
-        initComponents();
+   /*设计orderStock类为含参公共类，目的是为了查询能使用同一个界面，
+   如果sql为空也就是为”“的时候是正常刷新一次，非空的情况仅用于查询模块
+    */
+    public orderStock(String sql) {
+        initComponents(sql);
     }
 
 
@@ -68,18 +79,41 @@ public class orderStock extends JFrame {
     JTextField textField1;
     private String head[] = {"id", "商品名称", "单价", "库存"};
     private Object[][] data = null;
+
     private JButton button1;
-
-
-
-
+    private JButton button2;
+    private JButton button3;
+    private JButton button4;
+    private JButton button5;
+    private JButton button6;
 
     public static void main(String[] args) {
-        new orderStock();
+        new orderStock("");
     }
 
 
-    public void initComponents() {
+    //用于查询命令的时候的判断字符
+    public boolean panduan(String a){
+        try{
+            String user = "zsx";
+            String dbPassword = "zsx1234GuEt";
+            String url = "jdbc:oracle:thin:@139.9.192.221:1521:orcl";
+
+            double d2 = Double.parseDouble(a);
+            String sql2 = "SELECT * FROM StoreHouse WHERE Goods_price = "+d2;
+            Connection conn = DriverManager.getConnection(url, user, dbPassword);
+            Statement stmt = conn.createStatement();
+
+            ResultSet rs2 = stmt.executeQuery(sql2);
+        } catch (Exception e) {
+            System.out.println(a);
+            return  false;
+        }
+        return true;
+    }
+
+    //改成含参公共类是为了查询功能的优化，一般情况传递的参数是空的。
+    public void initComponents(String sql111) {
 
         String user = "zsx";
         String dbPassword = "zsx1234GuEt";
@@ -89,15 +123,15 @@ public class orderStock extends JFrame {
         table1 = new JTable();
         textField1 = new JTextField();
         button1 = new JButton();
-        JButton button2 = new JButton();
-        JButton button3 = new JButton();
-        JButton button4 = new JButton();
+        button2 = new JButton();
+        button3 = new JButton();
+        button4 = new JButton();
+        button5 = new JButton();
+        button6 = new JButton();
 
+        String sql1=sql111;
 
-
-
-
-        DefaultTableModel tableModel = new DefaultTableModel(queryData(), head) {
+        DefaultTableModel tableModel = new DefaultTableModel(queryData(sql1), head) {
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
@@ -112,12 +146,23 @@ public class orderStock extends JFrame {
 
 
         contentPane.add(textField1);
-        textField1.setBounds(360, 345, 80, textField1.getPreferredSize().height);
+        textField1.setBounds(390, 345, 70, textField1.getPreferredSize().height);
 
-        button1.setText("添加");
+        button1.setText("刷新");
         contentPane.add(button1);
-        button1.setBounds(new Rectangle(new Point(80, 340), button1.getPreferredSize()));
+        button1.setBounds(new Rectangle(new Point(45, 340), button1.getPreferredSize()));
         button1.addActionListener(
+                e -> {
+                    this.setVisible(false);
+                    orderStock orderstock =new orderStock("");
+                    orderstock.setVisible(true);
+                }
+        );
+
+        button2.setText("添加");
+        contentPane.add(button2);
+        button2.setBounds(new Rectangle(new Point(115, 340), button2.getPreferredSize()));
+        button2.addActionListener(
                 e -> {
                     /*int index1 = table1.getSelectedRow();//获取选中行
                     int column1 = table1.getSelectedColumnCount();//获取选中列
@@ -128,45 +173,36 @@ public class orderStock extends JFrame {
                 }
         );
 
-        button2.setText("删除");
-        contentPane.add(button2);
-        button2.setBounds(new Rectangle(new Point(150, 340), button2.getPreferredSize()));
-        button2.addActionListener(
-                e -> {
-                    int index1 = table1.getSelectedRow();//获取选中行
-                    int date1= (int) table1.getValueAt(index1, 0);
-
-                    String sql="delete from StoreHouse where Goods_id = " + date1;
-                    ResultSet rs = null;//结果集：内存，存储了查询到的数据；内存区有一个游标，执行完查询的时候，不指向任何记录
-                    Statement stmt = null;//语句对象，容易产生注入攻击
-                    Connection conn = null;
-                    try {
-                        conn = DriverManager.getConnection(url, user, dbPassword);
-                        stmt = conn.createStatement();
-                        rs = stmt.executeQuery(sql);
-                        orderStock orderStock =new orderStock();
-                        orderStock.setVisible(true);
-                        this.setVisible(false);
-                    } catch (SQLException ex) {
-                        ex.printStackTrace();
-                    }
-
-                }
-        );
-
-        button3.setText("修改");
+        button3.setText("删除");
         contentPane.add(button3);
-        button3.setBounds(new Rectangle(new Point(220, 340), button3.getPreferredSize()));
+        button3.setBounds(new Rectangle(new Point(185, 340), button3.getPreferredSize()));
         button3.addActionListener(
                 e -> {
 
+                    int index1 = table1.getSelectedRow();//获取选中行
+                    int column1 = table1.getSelectedColumnCount();//获取选中列
+                    System.out.println(table1.getValueAt(index1,column1));
+
+                    setname(String.valueOf(table1.getValueAt(index1,column1)));
+                    erciqveding erci =new erciqveding();
+                    erci.setVisible(true);
+                    this.setVisible(false);
+                }
+        );
+
+        button4.setText("修改");
+        contentPane.add(button4);
+        button4.setBounds(new Rectangle(new Point(255, 340), button4.getPreferredSize()));
+        button4.addActionListener(
+                e -> {
+                    setsql(sql1);
+                    this.setVisible(false);
                     //获取选中的数值
                     int index1 = table1.getSelectedRow();//获取选中行
                     int column1 = table1.getSelectedColumnCount();//获取选中列
                     System.out.println(table1.getValueAt(index1,column1));
 
-                    int a= index1+1;
-                    sethang(a);
+                    setname(String.valueOf(table1.getValueAt(index1,column1)));
                     System.out.println(a);
                     String sql = "Select * From StoreHouse Where Goods_name="+"'"+table1.getValueAt(index1,column1)+"'";
                     System.out.println(sql);
@@ -190,22 +226,44 @@ public class orderStock extends JFrame {
 
                     updateStock upsk = new updateStock();
                     upsk.setVisible(true);
-                    this.setVisible(false);
+
                 }
         );
 
-        button4.setText("查询");
-        contentPane.add(button4);
-        button4.setBounds(new Rectangle(new Point(290, 340), button4.getPreferredSize()));
-        button4.addActionListener(
+        button5.setText("查询");
+        contentPane.add(button5);
+        button5.setBounds(new Rectangle(new Point(325, 340), button5.getPreferredSize()));
+        button5.addActionListener(
                 e -> {
-                    d= textField1.getText();
-                    setA(d);
-                    serachStock search=new serachStock();
-                    search.setVisible(true);
                     this.setVisible(false);
+                    boolean panduan =panduan(textField1.getText());
+                    String sql="";
+                    if(panduan==true){
+                        sql = "SELECT * FROM StoreHouse WHERE Goods_id = "+textField1.getText()+"or Goods_price="+textField1.getText()+"or Goods_stock="+textField1.getText();
+                    }
+                    else{
+                        sql = "SELECT * FROM StoreHouse WHERE Goods_name = "+"'"+textField1.getText()+"'";
+                    }
+                    setsql(sql);
+                    System.out.println("即将执行的sql：" + sql);
+                    String sql2 = "Select * From "+"("+sql+")"+" order by Goods_id";
+                    orderStock orderstock = new orderStock(sql2);
+                    orderstock.setVisible(true);
+
                 }
 
+        );
+
+
+        button6.setText("退出登录");
+        contentPane.add(button6);
+        button6.setBounds(new Rectangle(new Point(5, 5), button6.getPreferredSize()));
+        button6.addActionListener(
+                e -> {
+                    this.setVisible(false);
+                    mainlogin mainlogin1=new mainlogin();
+                    mainlogin1.setVisible(true);
+                }
         );
 
 
@@ -216,27 +274,15 @@ public class orderStock extends JFrame {
         contentPane.add(scrollPane1);
         scrollPane1.setBounds(45, 35, 415, 295);
 
-        {
+        contentPane.setPreferredSize(new Dimension(500, 430));
 
-            Dimension preferredSize = new Dimension();
-            for (int i = 0; i < contentPane.getComponentCount(); i++) {
-                Rectangle bounds = contentPane.getComponent(i).getBounds();
-                preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
-                preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
-            }
-            Insets insets = contentPane.getInsets();
-            preferredSize.width += insets.right;
-            preferredSize.height += insets.bottom;
-            contentPane.setMinimumSize(preferredSize);
-            contentPane.setPreferredSize(preferredSize);
-        }
         pack();
         setLocationRelativeTo(getOwner());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
     }
 
-    public Object[][] queryData() {
+    public Object[][] queryData(String sql1) {
 
         java.util.List<Stockhouse> list = new ArrayList<Stockhouse>();
         Connection conn = null;
@@ -244,9 +290,16 @@ public class orderStock extends JFrame {
         String dbPassword = "zsx1234GuEt";
         String url="jdbc:oracle:thin:@139.9.192.221:1521:orcl";
         Statement stmt = null;//SQL语句对象，拼SQL
-        String sql = "SELECT * FROM StoreHouse";
-        String sql2 = "Select * From StoreHouse order by Goods_id";
-        System.out.println("即将执行的sql：" + sql);
+        String sql2=null;
+        if(sql1==""){
+             sql2 = "Select * From StoreHouse order by Goods_id";
+        }else{
+             sql2=sql1;
+        }
+
+
+
+        System.out.println("即将执行的sql：" + sql2);
         ResultSet rs = null;
         try {
             conn = DriverManager.getConnection(url, user, dbPassword);

@@ -73,7 +73,7 @@ public class balogin extends JFrame{
                         rs = stmt.executeQuery();
                         if (rs.next()) {//让游标向下移动一次
                             System.out.println("登录成功");
-                            orderStock orst = new orderStock();
+                            orderStock orst = new orderStock("");
                             orst.setVisible(true);//显示另一个界面
                             //同时隐藏登录界面
                             this.setVisible(false);
