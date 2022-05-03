@@ -3,9 +3,7 @@ import java.sql.*;
 import javax.swing.*;
 
 import Login.*;
-/*
- * Created by JFormDesigner on Tue May 03 02:45:36 CST 2022
- */
+
 
 
 
