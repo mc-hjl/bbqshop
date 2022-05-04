@@ -33,6 +33,10 @@ public class orderStock extends JFrame {
     //用于修改查询后的表的参数后返回的表所用的参数~
     private static String sql="";
 
+    //获取最后ID的下一位，便于添加的时候的便利
+    private  static  String id;
+
+
     //传参的参数生成
     String a=d;
     String xiugai11=xiugai1;
@@ -41,10 +45,6 @@ public class orderStock extends JFrame {
     String xiugai44=xiugai4;
     String name1=name;
     String sql1=sql;
-
-    public void setA(String d){
-        orderStock.d = d;
-    }
 
     //获取修改框的值
     public void setxiugai1(String xiugai1){
@@ -140,8 +140,6 @@ public class orderStock extends JFrame {
 
         table1.setModel(tableModel);
 
-
-
         var contentPane = getContentPane();
         contentPane.setLayout(null);
 
@@ -169,9 +167,7 @@ public class orderStock extends JFrame {
         button2.setBounds(new Rectangle(new Point(115, 340), button2.getPreferredSize()));
         button2.addActionListener(
                 e -> {
-                    /*int index1 = table1.getSelectedRow();//获取选中行
-                    int column1 = table1.getSelectedColumnCount();//获取选中列
-                    System.out.println(table1.getValueAt(index1,column1));*/
+
                     inStock insk = new inStock();
                     insk.setVisible(true);//显示另一个界面
                     this.setVisible(false);//同时隐藏界面
@@ -247,7 +243,11 @@ public class orderStock extends JFrame {
                         sql = "SELECT * FROM StoreHouse WHERE Goods_id = "+textField1.getText()+"or Goods_price="+textField1.getText()+"or Goods_stock="+textField1.getText();
                     }
                     else{
-                        sql = "SELECT * FROM StoreHouse WHERE Goods_name = "+"'"+textField1.getText()+"'";
+                        sql = "SELECT * FROM StoreHouse WHERE Goods_name like "+"'%"+textField1.getText()+"%'";
+                    }
+
+                    if(textField1.getText()==""){
+                        sql = "select * from StoreHouse";
                     }
                     setsql(sql);
                     System.out.println("即将执行的sql：" + sql);

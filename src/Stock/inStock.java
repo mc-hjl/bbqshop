@@ -21,14 +21,41 @@ public class inStock extends JFrame {
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
+
+        //用于获得最后一行信息的ID
+        orderStock orderstock2=new orderStock("");
+        String name=orderstock2.name1;
+        String user = "zsx";
+        String dbPassword = "zsx1234GuEt";
+        String url = "jdbc:oracle:thin:@139.9.192.221:1521:orcl";
+        String SQL="select Goods_id from StoreHouse order by Goods_id ";
+        System.out.println(SQL);
+        System.out.println("SQL为:"+SQL);
+        Statement STMT=null;
+        ResultSet RT=null;
+        Connection CONN = null;
+        try {
+            CONN = DriverManager.getConnection(url, user, dbPassword);
+            STMT = CONN.createStatement();
+            RT=STMT.executeQuery(SQL);
+            String ID="";
+            while (RT.next()) {
+                ID=RT.getString(1);//得到所需要的ID
+            }
+            int id1= Integer.parseInt(ID);
+            String ID2= String.valueOf(id1+1);
+            textField1 = new JTextField(ID2);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         label1 = new JLabel();
-        textField1 = new JTextField();
         label2 = new JLabel();
         textField2 = new JTextField();
         label3 = new JLabel();
         textField3 = new JTextField();
         label4 = new JLabel();
-        textField4 = new JTextField();
+        textField4 = new JTextField("100");
         button1 = new JButton();
         button2 = new JButton();
 
@@ -74,12 +101,6 @@ public class inStock extends JFrame {
                     /*int index1 = table1.getSelectedRow();//获取选中行
                     int column1 = table1.getSelectedColumnCount();//获取选中列
                     System.out.println(table1.getValueAt(index1,column1));*/
-                    String username = textField1.getText();
-                    String password = textField2.getText();
-
-                    String user = "zsx";
-                    String dbPassword = "zsx1234GuEt";
-                    String url = "jdbc:oracle:thin:@139.9.192.221:1521:orcl";
 
                     Connection conn = null;
                     // 拼sql，容易有注入攻击
@@ -87,7 +108,7 @@ public class inStock extends JFrame {
                     String sql2 = "select * from StoreHouse order by Goods_id";
                     System.out.println(sql);
                     ResultSet rs = null;//结果集：内存，存储了查询到的数据；内存区有一个游标，执行完查询的时候，不指向任何记录
-                    ResultSet rs2 = null;//结果集：内存，存储了查询到的数据；内存区有一个游标，执行完查询的时候，不指向任何记录
+                    ResultSet rs2 = null;//结果集：内1存，存储了查询到的数据；内存区有一个游标，执行完查询的时候，不指向任何记录
                     Statement stmt = null;//语句对象，容易产生注入攻击
                     try {
                         conn = DriverManager.getConnection(url, user, dbPassword);
