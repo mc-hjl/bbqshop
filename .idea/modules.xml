@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/bbqshop.iml" filepath="$PROJECT_DIR$/bbqshop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/bbqshop.iml" filepath="$PROJECT_DIR$/.idea/bbqshop.iml" />
     </modules>
   </component>
 </project>
