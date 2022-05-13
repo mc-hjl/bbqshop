@@ -2,10 +2,10 @@
  * Created by JFormDesigner on Sat May 14 00:41:33 CST 2022
  */
 
-package menu;
+package cn.edu.guet.weappdemo.menu;
 
-import Login.balogin;
-import Login.relogin;
+import cn.edu.guet.weappdemo.Login.balogin;
+import cn.edu.guet.weappdemo.Login.relogin;
 
 import java.awt.*;
 import javax.swing.*;

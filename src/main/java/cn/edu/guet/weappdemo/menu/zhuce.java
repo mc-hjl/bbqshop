@@ -2,7 +2,7 @@
  * Created by JFormDesigner on Fri May 13 23:59:13 CST 2022
  */
 
-package menu;
+package cn.edu.guet.weappdemo.menu;
 
 import java.awt.*;
 import java.sql.*;
