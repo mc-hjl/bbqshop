@@ -22,7 +22,7 @@ public class inStock extends JFrame {
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
 
-        //用于获得最后一行信息的ID
+        //用于获得最后一行信息的ID,便于ID自动获取
         orderStock orderstock2=new orderStock("");
         String name=orderstock2.name1;
         String user = "zsx";
