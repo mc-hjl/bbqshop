@@ -23,13 +23,17 @@ public class relogin extends JFrame {
     }
 
     private void initComponents() {
+        zhuce zhuce1 =new zhuce();
+        String xinzhanghao="";
+        xinzhanghao = String.valueOf(zhuce1.zhanghao1);//获取刚刚注册所获得的账号
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         label1 = new JLabel();
         label2 = new JLabel();
         label3 = new JLabel();
-        textField1 = new JTextField("蟀哥伊戈");
-        textField2 = new JTextField("雀食蟀");
+        textField1 = new JTextField(xinzhanghao);
+        textField2 = new JTextField();
         button1 = new JButton();
+        button2 = new JButton();
 
         //======== this ========
         var contentPane = getContentPane();
@@ -41,7 +45,7 @@ public class relogin extends JFrame {
         label1.setBounds(135, 25, 125, 25);
 
         //---- label2 ----
-        label2.setText("用户名");
+        label2.setText("   账号：");
         contentPane.add(label2);
         label2.setBounds(50, 60, 60, label2.getPreferredSize().height);
 
@@ -60,11 +64,11 @@ public class relogin extends JFrame {
                 e -> {
                     String username=textField1.getText();
                     String password=textField2.getText();
-                    String sql="SELECT * from sys_user where name=? AND password=?";
+                    String sql="SELECT * from SYS_customer where cust_id=? AND cust_password=?";
                     System.out.println(sql);
 
-                    String user="zjp";
-                    String dbPassword="zjp1234GuEt";
+                    String user="zsx";
+                    String dbPassword="zsx1234GuEt";
                     String url="jdbc:oracle:thin:@139.9.192.221:1521:orcl";
                     ResultSet rs=null;
                     PreparedStatement stmt=null;
@@ -74,12 +78,11 @@ public class relogin extends JFrame {
                         stmt=conn.prepareStatement(sql);
                         stmt.setString(1,username);
                         stmt.setString(2,password);
-
                         rs =stmt.executeQuery();
                         if(rs.next()){
                             System.out.println("登录成功");
                             this.setVisible(false);
-                            mainmenu mmenu=new mainmenu();
+                            mainmenu mmenu=new mainmenu("");
                             mmenu.setVisible(true);
 
                         }
@@ -97,6 +100,20 @@ public class relogin extends JFrame {
         contentPane.add(button1);
         button1.setBounds(120, 180, 180, button1.getPreferredSize().height);
 
+        //注册的按钮
+        button2.setText("注册");
+        button2.addActionListener(
+                e -> {
+                    this.setVisible(false);
+                    zhuce zhuce2 = new zhuce();
+                    zhuce2.setVisible(true);
+                }
+        );
+        contentPane.add(button2);
+        button2.setBounds(120, 220, 180, button2.getPreferredSize().height);
+
+
+
         contentPane.setPreferredSize(new Dimension(400, 300));
         pack();
         setLocationRelativeTo(getOwner());
@@ -113,6 +130,7 @@ public class relogin extends JFrame {
     private JTextField textField1;
     private JTextField textField2;
     private JButton button1;
+    private JButton button2;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
     public static void main(String[] args) {
         new relogin();

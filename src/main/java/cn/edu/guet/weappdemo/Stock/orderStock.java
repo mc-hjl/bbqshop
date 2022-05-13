@@ -183,7 +183,6 @@ public class orderStock extends JFrame {
                     int index1 = table1.getSelectedRow();//获取选中行
                     int column1 = table1.getSelectedColumnCount();//获取选中列
                     System.out.println(table1.getValueAt(index1,column1));
-
                     setname(String.valueOf(table1.getValueAt(index1,column1)));
                     erciqveding erci =new erciqveding();
                     erci.setVisible(true);

@@ -27,7 +27,7 @@ public class balogin extends JFrame{
         contentPane.setLayout(null);
 
         //---- label1 ----
-        label1.setText("\u7528\u6237\u540d\uff1a");
+        label1.setText("  账号：");
         contentPane.add(label1);
         label1.setBounds(new Rectangle(new Point(115, 90), label1.getPreferredSize()));
         contentPane.add(textField1);
