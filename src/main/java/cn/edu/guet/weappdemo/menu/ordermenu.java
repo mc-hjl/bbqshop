@@ -56,6 +56,7 @@ public class ordermenu extends JFrame {
         contentPane.add(button1);
         button1.setBounds(355, 470, 165, 55);
 
+
         contentPane.setPreferredSize(new Dimension(905, 615));
         pack();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

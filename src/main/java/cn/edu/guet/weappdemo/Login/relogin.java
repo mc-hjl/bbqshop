@@ -79,7 +79,7 @@ public class relogin extends JFrame {
                         if(rs.next()){
                             System.out.println("登录成功");
                             this.setVisible(false);
-                            mainmenu mmenu=new mainmenu();
+                            mainmenu mmenu=new mainmenu("");
                             mmenu.setVisible(true);
 
                         }
