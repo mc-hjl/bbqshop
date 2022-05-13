@@ -1,15 +1,16 @@
-package Stock;
+package cn.edu.guet.weappdemo.Stock;
 
-import Login.balogin;
-import com.sun.jdi.ObjectReference;
-import com.sun.tools.javac.Main;
+
+
 
 import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import mainlogin.*;
+
+import cn.edu.guet.weappdemo.Login.balogin;
+import cn.edu.guet.weappdemo.mainlogin.mainlogin;
 /*
  * Created by JFormDesigner on Tue Apr 26 21:21:30 CST 2022
  */

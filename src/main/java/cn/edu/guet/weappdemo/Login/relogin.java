@@ -1,4 +1,4 @@
-package Login;
+package cn.edu.guet.weappdemo.Login;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,7 +7,7 @@ import java.sql.*;
 import java.sql.DriverManager.*;
 import javax.swing.*;
 
-import menu.*;
+import cn.edu.guet.weappdemo.menu.*;
 /*
  * Created by JFormDesigner on Sat Apr 30 18:40:49 CST 2022
  */

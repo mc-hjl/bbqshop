@@ -1,4 +1,4 @@
-package menu;
+package cn.edu.guet.weappdemo.menu;
 
 import java.awt.*;
 import javax.swing.*;
