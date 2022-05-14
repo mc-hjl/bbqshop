@@ -55,6 +55,14 @@ public class ordermenu extends JFrame {
         button1.setText("\u786e\u8ba4\u652f\u4ed8\uff08\u5fae\u4fe1\u652f\u4ed8\uff09");
         contentPane.add(button1);
         button1.setBounds(355, 470, 165, 55);
+        button1.addActionListener(
+                e ->{
+                    if (e.getSource() == button1) {
+                        this.dispose();
+                        new payui(sl,expend);
+
+                    }
+                });
 
 
         contentPane.setPreferredSize(new Dimension(905, 615));

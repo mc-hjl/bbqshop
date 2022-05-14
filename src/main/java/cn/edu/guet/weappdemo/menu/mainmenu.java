@@ -18,6 +18,8 @@ import javax.swing.table.DefaultTableModel;
  * @author 1
  */
 public class mainmenu extends JFrame {
+    public float expend;
+
     public mainmenu(String sql) {
         initComponents(sql);
     }
@@ -72,7 +74,7 @@ public class mainmenu extends JFrame {
         textarea1.setText(sl);
 
         //---- label1 ---- 显示"菜单"二字
-        label1.setText("      \u83dc    \u5355");
+        label1.setText("菜单");
         contentPane.add(label1);
         label1.setBounds(160, 40, 85, 25);
 
@@ -200,7 +202,7 @@ public class mainmenu extends JFrame {
                 e  -> {
                     this.setVisible(false);
 
-                    float expend = 0;
+                    //float expend = 0;
                     int i=0;
                     sl="";
                     while(shopcar[i][0]!=null) {
